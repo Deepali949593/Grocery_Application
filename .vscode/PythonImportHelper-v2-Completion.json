@@ -1,0 +1,265 @@
+[
+    {
+        "label": "datetime",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "get_sql_connection",
+        "importPath": "sql_connection",
+        "description": "sql_connection",
+        "isExtraImport": true,
+        "detail": "sql_connection",
+        "documentation": {}
+    },
+    {
+        "label": "get_sql_connection",
+        "importPath": "sql_connection",
+        "description": "sql_connection",
+        "isExtraImport": true,
+        "detail": "sql_connection",
+        "documentation": {}
+    },
+    {
+        "label": "get_sql_connection",
+        "importPath": "sql_connection",
+        "description": "sql_connection",
+        "isExtraImport": true,
+        "detail": "sql_connection",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "mysql.connector",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "mysql.connector",
+        "description": "mysql.connector",
+        "detail": "mysql.connector",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "products_dao",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "products_dao",
+        "description": "products_dao",
+        "detail": "products_dao",
+        "documentation": {}
+    },
+    {
+        "label": "orders_dao",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "orders_dao",
+        "description": "orders_dao",
+        "detail": "orders_dao",
+        "documentation": {}
+    },
+    {
+        "label": "uom_dao",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uom_dao",
+        "description": "uom_dao",
+        "detail": "uom_dao",
+        "documentation": {}
+    },
+    {
+        "label": "insert_order",
+        "kind": 2,
+        "importPath": "backend.orders_dao",
+        "description": "backend.orders_dao",
+        "peekOfCode": "def insert_order(connection, order):\n    cursor = connection.cursor()\n    order_query = (\"INSERT INTO orders \"\n             \"(customer_name, total, datetime)\"\n             \"VALUES (%s, %s, %s)\")\n    order_data = (order['customer_name'], order['grand_total'], datetime.now())\n    cursor.execute(order_query, order_data)\n    order_id = cursor.lastrowid\n    order_details_query = (\"INSERT INTO order_details \"\n                           \"(order_id, product_id, quantity, total_price)\"",
+        "detail": "backend.orders_dao",
+        "documentation": {}
+    },
+    {
+        "label": "get_order_details",
+        "kind": 2,
+        "importPath": "backend.orders_dao",
+        "description": "backend.orders_dao",
+        "peekOfCode": "def get_order_details(connection, order_id):\n    cursor = connection.cursor()\n    query = \"SELECT * from order_details where order_id = %s\"\n    query = \"SELECT order_details.order_id, order_details.quantity, order_details.total_price, \"\\\n            \"products.name, products.price_per_unit FROM order_details LEFT JOIN products on \" \\\n            \"order_details.product_id = products.product_id where order_details.order_id = %s\"\n    data = (order_id, )\n    cursor.execute(query, data)\n    records = []\n    for (order_id, quantity, total_price, product_name, price_per_unit) in cursor:",
+        "detail": "backend.orders_dao",
+        "documentation": {}
+    },
+    {
+        "label": "get_all_orders",
+        "kind": 2,
+        "importPath": "backend.orders_dao",
+        "description": "backend.orders_dao",
+        "peekOfCode": "def get_all_orders(connection):\n    cursor = connection.cursor()\n    query = (\"SELECT * FROM orders\")\n    cursor.execute(query)\n    response = []\n    for (order_id, customer_name, total, dt) in cursor:\n        response.append({\n            'order_id': order_id,\n            'customer_name': customer_name,\n            'total': total,",
+        "detail": "backend.orders_dao",
+        "documentation": {}
+    },
+    {
+        "label": "get_all_products",
+        "kind": 2,
+        "importPath": "backend.products_dao",
+        "description": "backend.products_dao",
+        "peekOfCode": "def get_all_products(connection):\n    cursor = connection.cursor()\n    query = (\"select products.product_id, products.name, products.uom_id, products.price_per_unit, uom.uom_name from products inner join uom on products.uom_id=uom.uom_id\")\n    cursor.execute(query)\n    response = []\n    for (product_id, name, uom_id, price_per_unit, uom_name) in cursor:\n        response.append({\n            'product_id': product_id,\n            'name': name,\n            'uom_id': uom_id,",
+        "detail": "backend.products_dao",
+        "documentation": {}
+    },
+    {
+        "label": "insert_new_product",
+        "kind": 2,
+        "importPath": "backend.products_dao",
+        "description": "backend.products_dao",
+        "peekOfCode": "def insert_new_product(connection, product):\n    cursor = connection.cursor()\n    query = (\"INSERT INTO products \"\n             \"(name, uom_id, price_per_unit)\"\n             \"VALUES (%s, %s, %s)\")\n    data = (product['product_name'], product['uom_id'], product['price_per_unit'])\n    cursor.execute(query, data)\n    connection.commit()\n    return cursor.lastrowid\ndef delete_product(connection, product_id):",
+        "detail": "backend.products_dao",
+        "documentation": {}
+    },
+    {
+        "label": "delete_product",
+        "kind": 2,
+        "importPath": "backend.products_dao",
+        "description": "backend.products_dao",
+        "peekOfCode": "def delete_product(connection, product_id):\n    cursor = connection.cursor()\n    query = (\"DELETE FROM products where product_id=\" + str(product_id))\n    cursor.execute(query)\n    connection.commit()\n    return cursor.lastrowid\nif __name__ == '__main__':\n    connection = get_sql_connection()\n    # print(get_all_products(connection))\n    print(insert_new_product(connection, {",
+        "detail": "backend.products_dao",
+        "documentation": {}
+    },
+    {
+        "label": "get_uom",
+        "kind": 2,
+        "importPath": "backend.server",
+        "description": "backend.server",
+        "peekOfCode": "def get_uom():\n    response = uom_dao.get_uoms(connection)\n    response = jsonify(response)\n    response.headers.add('Access-Control-Allow-Origin', '*')\n    return response\n@app.route('/getProducts', methods=['GET'])\ndef get_products():\n    response = products_dao.get_all_products(connection)\n    response = jsonify(response)\n    response.headers.add('Access-Control-Allow-Origin', '*')",
+        "detail": "backend.server",
+        "documentation": {}
+    },
+    {
+        "label": "get_products",
+        "kind": 2,
+        "importPath": "backend.server",
+        "description": "backend.server",
+        "peekOfCode": "def get_products():\n    response = products_dao.get_all_products(connection)\n    response = jsonify(response)\n    response.headers.add('Access-Control-Allow-Origin', '*')\n    return response\n@app.route('/insertProduct', methods=['POST'])\ndef insert_product():\n    request_payload = json.loads(request.form['data'])\n    product_id = products_dao.insert_new_product(connection, request_payload)\n    response = jsonify({",
+        "detail": "backend.server",
+        "documentation": {}
+    },
+    {
+        "label": "insert_product",
+        "kind": 2,
+        "importPath": "backend.server",
+        "description": "backend.server",
+        "peekOfCode": "def insert_product():\n    request_payload = json.loads(request.form['data'])\n    product_id = products_dao.insert_new_product(connection, request_payload)\n    response = jsonify({\n        'product_id': product_id\n    })\n    response.headers.add('Access-Control-Allow-Origin', '*')\n    return response\n@app.route('/getAllOrders', methods=['GET'])\ndef get_all_orders():",
+        "detail": "backend.server",
+        "documentation": {}
+    },
+    {
+        "label": "get_all_orders",
+        "kind": 2,
+        "importPath": "backend.server",
+        "description": "backend.server",
+        "peekOfCode": "def get_all_orders():\n    response = orders_dao.get_all_orders(connection)\n    response = jsonify(response)\n    response.headers.add('Access-Control-Allow-Origin', '*')\n    return response\n@app.route('/insertOrder', methods=['POST'])\ndef insert_order():\n    request_payload = json.loads(request.form['data'])\n    order_id = orders_dao.insert_order(connection, request_payload)\n    response = jsonify({",
+        "detail": "backend.server",
+        "documentation": {}
+    },
+    {
+        "label": "insert_order",
+        "kind": 2,
+        "importPath": "backend.server",
+        "description": "backend.server",
+        "peekOfCode": "def insert_order():\n    request_payload = json.loads(request.form['data'])\n    order_id = orders_dao.insert_order(connection, request_payload)\n    response = jsonify({\n        'order_id': order_id\n    })\n    response.headers.add('Access-Control-Allow-Origin', '*')\n    return response\n@app.route('/deleteProduct', methods=['POST'])\ndef delete_product():",
+        "detail": "backend.server",
+        "documentation": {}
+    },
+    {
+        "label": "delete_product",
+        "kind": 2,
+        "importPath": "backend.server",
+        "description": "backend.server",
+        "peekOfCode": "def delete_product():\n    return_id = products_dao.delete_product(connection, request.form['product_id'])\n    response = jsonify({\n        'product_id': return_id\n    })\n    response.headers.add('Access-Control-Allow-Origin', '*')\n    return response\nif __name__ == \"__main__\":\n    print(\"Starting Python Flask Server For Grocery Store Management System\")\n    app.run(port=5000)",
+        "detail": "backend.server",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "backend.server",
+        "description": "backend.server",
+        "peekOfCode": "app = Flask(__name__)\nconnection = get_sql_connection()\n@app.route('/getUOM', methods=['GET'])\ndef get_uom():\n    response = uom_dao.get_uoms(connection)\n    response = jsonify(response)\n    response.headers.add('Access-Control-Allow-Origin', '*')\n    return response\n@app.route('/getProducts', methods=['GET'])\ndef get_products():",
+        "detail": "backend.server",
+        "documentation": {}
+    },
+    {
+        "label": "connection",
+        "kind": 5,
+        "importPath": "backend.server",
+        "description": "backend.server",
+        "peekOfCode": "connection = get_sql_connection()\n@app.route('/getUOM', methods=['GET'])\ndef get_uom():\n    response = uom_dao.get_uoms(connection)\n    response = jsonify(response)\n    response.headers.add('Access-Control-Allow-Origin', '*')\n    return response\n@app.route('/getProducts', methods=['GET'])\ndef get_products():\n    response = products_dao.get_all_products(connection)",
+        "detail": "backend.server",
+        "documentation": {}
+    },
+    {
+        "label": "get_sql_connection",
+        "kind": 2,
+        "importPath": "backend.sql_connection",
+        "description": "backend.sql_connection",
+        "peekOfCode": "def get_sql_connection():\n  print(\"Opening mysql connection\")\n  global __cnx\n  if __cnx is None:\n    __cnx = mysql.connector.connect(user='root', password='root', database='grocery_store')\n  return __cnx",
+        "detail": "backend.sql_connection",
+        "documentation": {}
+    },
+    {
+        "label": "__cnx",
+        "kind": 5,
+        "importPath": "backend.sql_connection",
+        "description": "backend.sql_connection",
+        "peekOfCode": "__cnx = None\ndef get_sql_connection():\n  print(\"Opening mysql connection\")\n  global __cnx\n  if __cnx is None:\n    __cnx = mysql.connector.connect(user='root', password='root', database='grocery_store')\n  return __cnx",
+        "detail": "backend.sql_connection",
+        "documentation": {}
+    },
+    {
+        "label": "get_uoms",
+        "kind": 2,
+        "importPath": "backend.uom_dao",
+        "description": "backend.uom_dao",
+        "peekOfCode": "def get_uoms(connection):\n    cursor = connection.cursor()\n    query = (\"select * from uom\")\n    cursor.execute(query)\n    response = []\n    for (uom_id, uom_name) in cursor:\n        response.append({\n            'uom_id': uom_id,\n            'uom_name': uom_name\n        })",
+        "detail": "backend.uom_dao",
+        "documentation": {}
+    }
+]
