@@ -1,23 +1,63 @@
-# python_projects_grocery_webapp
-In this python project, we will build a grocery store management application. It will be 3 tier application,
-1. Front end: UI is written in HTML/CSS/Javascript/Bootstrap
-2. Backend: Python and Flask
-3. Database: mysql
+# 🛒 Python Grocery Store Management System
 
-![](homepage.JPG)
+This is a **3-tier grocery store management application** developed using:
 
-### Installation Instructions
+- 🖥️ **Frontend**: HTML, CSS, JavaScript, Bootstrap  
+- ⚙️ **Backend**: Python (Flask framework)  
+- 🗄️ **Database**: MySQL
 
-Download mysql for windows: https://dev.mysql.com/downloads/installer/
+The application allows store managers to manage products, units of measurement (UOM), and customer orders efficiently.
 
-`pip install mysql-connector-python`
+![Homepage](homepage.JPG)
 
-### Exercise 
+---
 
-The grocery management system that we built is functional but after we give it to users for use, we got following feedback. The exercise for you to address this feedback and implement these features in the application,
-1. **Products Module**: In products page that lists current products, add an edit button next to delete button that allows to edit current product
-2. **Products Module**: Implement a new form that allows you to add new UOM in the application. For example you want to add **Cubic Meter** as a new UOM as the grocery store decided to start selling **wood** as well. This requies changing backend (python server) and front end (UI) both.
-3. **Orders Module**: When you place an order it doesn't have any validation. For example one can enter an order with empty customer name. You need to add validation for customer name and invalid item name or not specifying a quantity etc. This is only front end UI work.
-4. **Orders Module**: In new order page there is a bug. When you manually change total price of an item it doesn't change the grand total. You need to fix this issue.
-5. **Orders Module**: In the grid where orders are listed, add a view button in the last column. On clicking this button it should show you order details where individual items in that order are listed along with their price/quantity etc.
+## 🚀 Features
 
+### ✅ Products Module
+- View existing products
+- Add new products
+- **Edit** product details (💡 newly added based on feedback)
+- Delete products
+- Add new Units of Measurement (UOM) like **Cubic Meter** (🆕 Backend + Frontend)
+
+### ✅ Orders Module
+- Create new customer orders
+- Add multiple items per order
+- **Frontend validation** for:
+  - Empty customer name
+  - Invalid product or quantity
+- Fix for **grand total calculation bug** (💡 manually editing item price now updates total)
+- View detailed order summary including itemized list and price (🆕)
+
+---
+
+## ⚙️ Installation Instructions
+
+### 🔹 Step 1: Set Up MySQL
+- Download MySQL for Windows:  
+  👉 [MySQL Installer](https://dev.mysql.com/downloads/installer/)
+- Create a database named `grocery` and import the required tables (SQL dump provided if available)
+
+### 🔹 Step 2: Install Python Requirements
+Install MySQL connector for Python:
+
+```bash
+pip install mysql-connector-python
+
+Grocery_Application/
+│
+├── backend/
+│   └── server.py          # Flask server
+│
+├── frontend/
+│   ├── index.html         # Home Page
+│   ├── manage-product.html
+│   ├── manage-order.html
+│   └── css/
+│   └── js/
+│
+├── database/
+│   └── grocery_schema.sql # MySQL table definitions (if provided)
+│
+└── README.md
